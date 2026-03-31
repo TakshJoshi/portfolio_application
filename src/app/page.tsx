@@ -3,7 +3,8 @@ import Landing from "@/components/Hero"
 import About from "@/components/About"
 import Career from "@/components/Career"
 import Projects from "@/components/Projects"
-import TechStack from "@/components/TechStack"
+import dynamic from "next/dynamic"
+import TechStackWrapper from "@/components/TechStackWrapper"
 import SocialIcons from "@/components/SocialIcons"
 import ResumeButton from "@/components/ResumeButton"
 import Contact from "@/components/Contact"
@@ -23,8 +24,7 @@ export default function Home() {
 
       <Projects />
 
-      <TechStack />
-
+      <TechStackWrapper />
       <Contact />
 
     </main>

@@ -54,17 +54,16 @@ export default function Projects() {
 
   useGSAP(() => {
 
-    if (typeof window === "undefined") return
+    if (typeof window === "undefined") return // ✅ SSR FIX
   
-    const track = sectionRef.current?.querySelector(".projects-track") as HTMLElement
-  
+    const track = document.querySelector(".projects-track") as HTMLElement
     if (!track) return
   
     gsap.to(track, {
       x: -(track.scrollWidth - window.innerWidth),
       ease: "none",
       scrollTrigger: {
-        trigger: sectionRef.current,
+        trigger: ".projects-section",
         start: "top top",
         end: () => "+=" + (track.scrollWidth - window.innerWidth),
         scrub: 0.5,
@@ -72,7 +71,7 @@ export default function Projects() {
       }
     })
   
-  }, { scope: sectionRef })
+  })
 
   return (
 

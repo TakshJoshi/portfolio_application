@@ -31,8 +31,8 @@ const images = [
 
 const geometry = new THREE.SphereGeometry(1,32,32)
 
-const spheres = [...Array(25)].map(()=>({
-  scale: THREE.MathUtils.randFloat(0.8,1.4)
+const spheres = [...Array(25)].map(() => ({
+  scale: THREE.MathUtils.randFloat(0.4, 0.9)
 }))
 
 function Sphere({scale,material}:any){
@@ -40,17 +40,19 @@ function Sphere({scale,material}:any){
   const ref = useRef<RapierRigidBody>(null)
   const vec = new THREE.Vector3()
 
-  useFrame((state,delta)=>{
+  useFrame((state, delta) => {
 
-    delta = Math.min(0.1,delta)
-
+    if (!ref.current) return // ✅ CRASH FIX
+  
+    delta = Math.min(0.1, delta)
+  
     const impulse = vec
-      .copy(ref.current!.translation())
+      .copy(ref.current.translation())
       .normalize()
-      .multiplyScalar(-60*delta*scale)
-
-    ref.current?.applyImpulse(impulse,true)
-
+      .multiplyScalar(-60 * delta * scale)
+  
+    ref.current.applyImpulse(impulse, true)
+  
   })
 
   return(
@@ -121,7 +123,12 @@ export default function TechStack(){
 
     const loader = new THREE.TextureLoader()
   
-    const textures = images.map((i)=>loader.load(i))
+    const textures = images.map((i) => {
+      const tex = loader.load(i)
+      tex.colorSpace = THREE.SRGBColorSpace
+      tex.anisotropy = 4
+      return tex
+    })
   
     return textures.map((texture) =>
       new THREE.MeshPhysicalMaterial({
@@ -138,59 +145,58 @@ export default function TechStack(){
   }, [])
   return(
 
-    <section className="h-screen flex flex-col items-center justify-center">
+<section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+      {/* Title */}
+  <h2 className="absolute top-32 text-6xl font-bold z-10">
+    MY TECHSTACK
+  </h2>
 
-      <h2 className="text-6xl font-bold mb-10">
-        MY TECHSTACK
-      </h2>
+  {/* 3D Canvas */}
+  <div className="absolute inset-0">
+  <Canvas
+  camera={{ position: [0, 0, 12], fov: 40 }}
+  gl={{ alpha: true }}
+  onCreated={({ gl }) => {
+    gl.setClearColor(0x000000, 0) // transparent but base is black
+  }}
+>
 
-      <Canvas
-        camera={{position:[0,0,18],fov:35}}
-        gl={{alpha:true}}
-      >
 
-        <ambientLight intensity={1}/>
+      <ambientLight intensity={1} />
 
-        <spotLight
-          position={[20,20,25]}
-          angle={0.2}
-          penumbra={1}
-        />
+      <spotLight
+        position={[20, 20, 25]}
+        angle={0.2}
+        penumbra={1}
+      />
 
-        <Physics gravity={[0,0,0]}>
+      <Physics gravity={[0, 0, 0]}>
+        <Pointer />
 
-          <Pointer/>
-
-          {spheres.map((s,i)=>(
-
-            <Sphere
-              key={i}
-              scale={s.scale}
-              material={
-                materials[
-                  Math.floor(Math.random()*materials.length)
-                ]
-              }
-            />
-
-          ))}
-
-        </Physics>
-
-        <Environment preset="city"/>
-
-        <EffectComposer>
-          <N8AO
-            aoRadius={2}
-            intensity={1.2}
-            color="#0f002c"
+        {spheres.map((s, i) => (
+          <Sphere
+            key={i}
+            scale={s.scale}
+            material={
+              materials[
+                Math.floor(Math.random() * materials.length)
+              ]
+            }
           />
-        </EffectComposer>
+        ))}
 
-      </Canvas>
+      </Physics>
 
-    </section>
+      <Environment preset="city" />
 
+      <EffectComposer>
+        <N8AO aoRadius={2} intensity={1.2} color="#0f002c" />
+      </EffectComposer>
+
+    </Canvas>
+  </div>
+
+</section>
   )
 
 }

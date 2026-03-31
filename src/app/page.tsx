@@ -24,7 +24,7 @@ export default function Home() {
 
       <Projects />
 
-      <TechStackWrapper />
+<TechStackWrapper />
       <Contact />
 
     </main>

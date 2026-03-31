@@ -54,32 +54,29 @@ export default function Projects() {
 
   useGSAP(() => {
 
-    const track = document.querySelector(".projects-track") as HTMLElement
-
+    if (typeof window === "undefined") return
+  
+    const track = sectionRef.current?.querySelector(".projects-track") as HTMLElement
+  
     if (!track) return
-
+  
     gsap.to(track, {
-
       x: -(track.scrollWidth - window.innerWidth),
-
       ease: "none",
-
       scrollTrigger: {
-        trigger: ".projects-section",
+        trigger: sectionRef.current,
         start: "top top",
         end: () => "+=" + (track.scrollWidth - window.innerWidth),
         scrub: 0.5,
         pin: true
       }
-
     })
-
-  })
+  
+  }, { scope: sectionRef })
 
   return (
 
-    <section className="projects-section relative overflow-hidden pb-80">
-
+    <section ref={sectionRef} className="projects-section relative overflow-hidden pb-80">    
       <div className="max-w-7xl mx-auto w-full px-10 pt-30">
 
         <h2 className="text-5xl font-bold mb-20">
@@ -140,13 +137,22 @@ export default function Projects() {
                     GitHub
                   </a>
 
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    className="flex-1 text-center text-sm border border-[#0ABAB5]/40 py-2 rounded-lg text-[#0ABAB5] hover:bg-[#0ABAB5]/10 transition"
-                  >
-                    Live Demo
-                  </a>
+                  {project.demo.startsWith("/") ? (
+                    <Link
+                      href={project.demo}
+                      className="flex-1 text-center text-sm border border-[#0ABAB5]/40 py-2 rounded-lg text-[#0ABAB5] hover:bg-[#0ABAB5]/10 transition"
+                    >
+                      Live Demo
+                    </Link>
+                  ) : (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      className="flex-1 text-center text-sm border border-[#0ABAB5]/40 py-2 rounded-lg text-[#0ABAB5] hover:bg-[#0ABAB5]/10 transition"
+                    >
+                      Live Demo
+                    </a>
+                  )}
 
                 </div>
 

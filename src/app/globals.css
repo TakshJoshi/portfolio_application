@@ -1,0 +1,22 @@
+@import "tailwindcss";
+body {
+    background: black;
+  }
+:root {
+    --tiffany: #0ABAB5;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+  
+    background: radial-gradient(
+      500px circle at var(--x) var(--y),
+      rgba(10,186,181,0.15),
+      transparent 40%
+    );
+  
+    z-index: 1;
+  }

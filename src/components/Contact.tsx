@@ -48,14 +48,14 @@ export default function Contact() {
             <div>
               <p className="text-sm mb-1">Email</p>
               <p className="text-lg text-white">
-                taksh@example.com
+                takshjoshi04@gmail.com
               </p>
             </div>
 
             <div>
               <p className="text-sm mb-1">Location</p>
               <p className="text-lg text-white">
-                Panipat, India
+                Chandigarh, India
               </p>
             </div>
 

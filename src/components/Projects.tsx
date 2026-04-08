@@ -75,7 +75,7 @@ export default function Projects() {
 
   return (
 
-    <section ref={sectionRef} className="projects-section relative overflow-hidden pb-80">    
+    <section ref={sectionRef} id="projects" className="projects-section relative overflow-hidden pb-80">    
       <div className="max-w-7xl mx-auto w-full px-10 pt-30">
 
         <h2 className="text-5xl font-bold mb-20">

@@ -22,7 +22,7 @@ export default function Hero() {
           SOFTWARE ENGINEER
         </motion.p>
 
-        <motion.h1
+        <motion.h1 
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -45,13 +45,21 @@ export default function Hero() {
           variants={fadeUp}
           className="flex gap-6 justify-center"
         >
-          <button className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-[#0ABAB5] hover:scale-105 transition">
+          <a
+            href="/Taksh_Joshi.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-[#0ABAB5] hover:scale-105 transition inline-block"
+          >
             Resume
-          </button>
+          </a>
 
-          <button className="px-6 py-3 rounded-lg border border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5]/10 transition">
+          <a
+            href="#projects"
+            className="px-6 py-3 rounded-lg border border-[#0ABAB5] text-[#0ABAB5] hover:bg-[#0ABAB5]/10 transition inline-block"
+          >
             Projects
-          </button>
+          </a>
         </motion.div>
 
       </motion.div>
